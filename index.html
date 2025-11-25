@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX最強コーチング</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ▼▼▼ ここに画像のファイル名を入れる ▼▼▼ */
+        body {
+            background-image: url('1.jpg'); /* ←ここを書き換える */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
+        /* 画像の上に重ねる紫のフィルター */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(75, 0, 130, 0.8), rgba(138, 43, 226, 0.8));
+            z-index: -1;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px 20px;
+            border: 4px solid #d700ff;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.6); /* 文字が見やすいように背景を少し暗く */
+            box-shadow: 0 0 30px #d700ff, inset 0 0 20px #d700ff; /* ド派手なネオン光 */
+            backdrop-filter: blur(5px);
+            max-width: 90%;
+        }
+
+        h1.main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: #00ffff; /* 水色ネオン */
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* 一番目立たせる価格部分 */
+        .price-box {
+            margin: 30px 0;
+            transform: skew(-10deg); /* ちょっと斜めにして勢いを出す */
+        }
+        .price-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem; /* 超巨大サイズ */
+            font-weight: 900;
+            background: linear-gradient(to right, #ffdd00, #ff0000); /* 黄金から赤のグラデ */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px #ffdd00;
+            line-height: 1;
+            margin: 0;
+        }
+        .price-sub {
+            font-size: 1.2rem;
+            color: #ffdd00;
+            font-weight: bold;
+        }
+
+        /* 実績リスト */
+        .achievements-list {
+            list-style: none;
+            padding: 0;
+            margin: 40px 0;
+            font-size: 1.4rem;
+        }
+        .achievements-list li {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: linear-gradient(90deg, transparent, rgba(215, 0, 255, 0.4), transparent);
+            text-shadow: 0 0 10px #d700ff;
+        }
+        .achievements-list span {
+            color: #ff00ff; /* ピンク色の強調 */
+            font-size: 1.6rem;
+        }
+
+        /* 連絡ボタン */
+        .contact-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(45deg, #8a2be2, #d700ff);
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 0 20px #d700ff;
+            transition: 0.3s;
+        }
+        .contact-btn:hover {
+           box-shadow: 0 0 40px #d700ff, 0 0 60px #d700ff; /* 押すとすごい光る */
+           transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="main-title">APEX LEGENDS<br>コーチング受付中</h1>
+
+        <div class="price-box">
+            <div class="price-text">1時間1000円!</div>
+            <div class="price-sub">衝撃の最安値</div>
+        </div>
+
+        <ul class="achievements-list">
+            <li>シーズン6〜15 <span>マスター</span></li>
+            <li>ソロマス経験 <span>10回以上!</span></li>
+        </ul>
+
+        <a href="https://x.com/zousan_hinoki?t=r625mq3uClVac5rqCbnIbQ&s=09" class="contact-btn">依頼・相談はX(Twitter)DMへ</a>
+        </div>
+
+</body>
+</html>
