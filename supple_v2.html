@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サプリ記録</title>
+<style>
+  /* 基本設定 */
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f2f5;
+    color: #1a1a1a;
+  }
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  /* カードのデザイン */
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+
+  /* ボタンのデザイン */
+  button {
+    display: block;
+    width: 100%;
+    padding: 24px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1); /* 立体感 */
+    transition: transform 0.1s, box-shadow 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* ボタンを押した時の動き */
+  button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+  }
+
+  /* 色分け */
+  .btn-vitD { background-color: #007bff; } /* 青 */
+  .btn-zinc { background-color: #28a745; } /* 緑 */
+
+  /* 履歴リストのデザイン */
+  .log-list {
+    font-size: 16px;
+  }
+  .log-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .log-item:last-child {
+    border-bottom: none;
+    color: #888;
+  }
+  .label {
+    font-weight: bold;
+    color: #555;
+    min-width: 60px;
+  }
+  .time {
+    font-family: monospace; /* 数字を揃える */
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <div class="card">
+    <button type="button" class="btn-vitD" onclick="record('vitD')">ビタミンD</button>
+    <div id="display-vitD" class="log-list"></div>
+  </div>
+
+  <div class="card">
+    <button type="button" class="btn-zinc" onclick="record('zinc')">亜鉛 (Zinc)</button>
+    <div id="display-zinc" class="log-list"></div>
+  </div>
+
+</div>
+
+<script>
+  // 設定：保存する場所の名前
+  const KEYS = {
+    vitD: 'data_vitD_v2',
+    zinc: 'data_zinc_v2'
+  };
+
+  // ページを開いた瞬間に履歴を表示
+  refreshDisplay('vitD');
+  refreshDisplay('zinc');
+
+  // --- 機能部分 ---
+
+  // 記録ボタンを押した時の処理
+  function record(type) {
+    try {
+      // 1. 現在のリストを読み込む（なければ空っぽ）
+      let list = JSON.parse(localStorage.getItem(KEYS[type]) || '[]');
+
+      // 2. 今の時間をテキストにする (例: 12/31 14:00)
+      const now = new Date();
+      const month = now.getMonth() + 1;
+      const date = now.getDate();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      const timeStr = `${month}/${date} ${hours}:${mins}`;
+
+      // 3. 新しい時間をリストの先頭に追加
+      list.unshift(timeStr);
+
+      // 4. 2個より多くなったら、古いもの（末尾）を消す
+      if (list.length > 2) {
+        list.pop();
+      }
+
+      // 5. スマホに保存する
+      localStorage.setItem(KEYS[type], JSON.stringify(list));
+
+      // 6. 画面を更新
+      refreshDisplay(type);
+
+    } catch (e) {
+      alert('エラー：保存できませんでした。\nシークレットモードの場合は解除してください。');
+      console.error(e);
+    }
+  }
+
+  // 画面の表示を更新する処理
+  function refreshDisplay(type) {
+    const displayArea = document.getElementById('display-' + type);
+    
+    // 保存データを確認
+    const list = JSON.parse(localStorage.getItem(KEYS[type]) || '[]');
+    
+    let html = '';
+    
+    if (list.length === 0) {
+      html = '<div class="log-item" style="color:#ccc; justify-content:center;">履歴なし</div>';
+    } else {
+      // リストの中身をHTMLにする
+      list.forEach((timeText, index) => {
+        const labelText = (index === 0) ? '今回' : '前回';
+        html += `
+          <div class="log-item">
+            <span class="label">${labelText}</span>
+            <span class="time">${timeText}</span>
+          </div>
+        `;
+      });
+    }
+
+    displayArea.innerHTML = html;
+  }
+</script>
+
+</body>
+</html>
